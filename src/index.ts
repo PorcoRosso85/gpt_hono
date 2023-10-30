@@ -5,8 +5,7 @@ import { routeAddTodo, routeDeleteTodo, routeGetTodos } from "./routes";
 import { Hono } from "hono";
 
 import viewRoute from "./routes/viewRoutes";
-
-const _TODOS: Record<string, string[]> = {};
+import { _TODOS } from "./commons/_TODO";
 
 const appOpenApi = new OpenAPIHono();
 appOpenApi.use("*", cors()).get("/.well-known/ai-plugin.json", (c) => {
@@ -21,8 +20,9 @@ appOpenApi
       _TODOS[username] = [];
     }
     _TODOS[username].push(todo);
-    const message = `Added ${todo}`;
+    const message = `Added ${todo} as ${username}`;
     console.log(message);
+    console.log(_TODOS);
     return c.jsonT({
       ok: true,
       message,
@@ -30,6 +30,7 @@ appOpenApi
   })
   .openapi(routeGetTodos, (c) => {
     const { username } = c.req.valid("param");
+    console.log(_TODOS);
     return c.jsonT({
       todos: _TODOS[username],
     });
@@ -44,7 +45,7 @@ appOpenApi
       todo_idx < _TODOS[username].length
     ) {
       const deletedTodo = _TODOS[username].slice(todo_idx + 1, 1);
-      message = `Deleted "${deletedTodo}"`;
+      message = `Deleted "${deletedTodo}" as ${username}`;
     }
     console.log(message);
     return c.jsonT({

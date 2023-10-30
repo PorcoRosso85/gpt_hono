@@ -1,5 +1,8 @@
 import { Hono } from "hono";
 import { _TODOS } from "../commons/_TODO";
+import { Render } from "../components/Render";
+import { Sortable } from "../components/Sortable";
+import { PostItem } from "../components/PostItem";
 
 const viewRoute = new Hono();
 viewRoute.get("/", (c) => {
@@ -9,10 +12,8 @@ viewRoute.get("/", (c) => {
   // };
   // return c.html(<>{_TODOS}</>);
   const style = `
-  .container { display: grid; grid-template-columns: 30% 70%; } 
+  .container { display: grid; grid-template-columns: 10% 90%; } 
   .container > :first-child {
-    background-color: #ff0000
-    font-color: #ff0000
   }
   `;
 
@@ -24,19 +25,23 @@ viewRoute.get("/", (c) => {
       <body>
         <div>
           {!_TODOS.user || _TODOS.user.length === 0 ? (
-            <div class="container">
+            <div class='container'>
               <div>code</div>
               <div>_TODOS is empty now</div>
             </div>
           ) : (
             _TODOS.user.map((item, index) => (
-              <div class="container">
-                <div>code</div>
-                <div
-                  key={index}
-                  dangerouslySetInnerHTML={{ __html: item }}
-                ></div>
-              </div>
+              <>
+                <div class='container'>
+                  <div>code</div>
+                  <div>
+                    <PostItem />
+                    <Sortable>
+                      <Render item={item} index={index} />
+                    </Sortable>
+                  </div>
+                </div>
+              </>
             ))
           )}
           {/* {object.user.map((item, index) => (

@@ -4,6 +4,8 @@ import { aiPluginJson } from "./ai-plugin";
 import { routeAddTodo, routeDeleteTodo, routeGetTodos } from "./routes";
 import { Hono } from "hono";
 
+import viewRoute from "./routes/viewRoutes";
+
 const _TODOS: Record<string, string[]> = {};
 
 const appOpenApi = new OpenAPIHono();
@@ -67,7 +69,7 @@ appOpenApi.doc("/openapi.json", {
 });
 
 const app = new Hono();
-
 app.route("/", appOpenApi);
+app.route("/view", viewRoute);
 
 export default app;

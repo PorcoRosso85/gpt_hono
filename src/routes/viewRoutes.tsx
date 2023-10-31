@@ -37,11 +37,11 @@ viewRoute
                   {/* TODO: 降順 */}
                   {/* <div class="container">
                     <div>code</div> */}
-                  <SaveItem>
-                    <Sortable>
+                  <Sortable>
+                    <SaveItem>
                       <Render item={item} index={index} />
-                    </Sortable>
-                  </SaveItem>
+                    </SaveItem>
+                  </Sortable>
                   {/* </div> */}
                   <div class="new-item"></div>
                 </>
@@ -60,11 +60,13 @@ viewRoute
       // const { input } = c.req.valid("json");
       const username = "user";
       console.log("c.req.parseBody()", await c.req.parseBody());
-      // console.log("c.req.formData()", await c.req.formData());
+      console.log("c.req.formData()", await c.req.formData());
+
       const input = await c.req.parseBody();
       const inputHtml = input["inputHtml"];
 
       if (typeof inputHtml === "string") {
+        console.log("inputHtml: ", inputHtml);
         _TODOS[username].push(inputHtml);
       } else {
         console.error("inputHtml is not a string:", inputHtml);

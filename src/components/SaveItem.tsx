@@ -1,22 +1,28 @@
 import { html } from "hono/html";
 
 export const SaveItem = (props) => {
-  const username = "user";
-
   return (
+    /**
+     * send child components to server using post request
+     * "render" id
+     *
+     */
     <>
-      <div
+      {/* // TODO: innerHTMLでidなどの属性も取得する必要あり */}
+      <form
         hx-post="/view/input"
         hx-target="next .new-item"
         hx-swap="outerHTML"
-        hx-on:click={html`
+        hx-on:submit={html`
           var inputHtml = document.getElementById("render").innerHTML;
-          document.getElementById("hiddenInput").value = inputHtml;
+          console.log(inputHtml); document.getElementById("hiddenInput").value =
+          inputHtml; console.log(document.getElementById("hiddenInput").value)
         `}
       >
-        <input type="hidden" id="hiddenInput" name="inputHtml" />
+        <input name="inputHtml" type="hidden" id="hiddenInput" />
         {props.children}
-      </div>
+        <button type="submit">submit</button>
+      </form>
     </>
   );
 };

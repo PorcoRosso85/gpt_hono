@@ -67,9 +67,9 @@ ul, ol {
   return (
     <>
       <style>{style}</style>
-      <script src='https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js'></script>
+      <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
       {/* <AddNewNode /> */}
-      <ul class='child'>
+      <ul class="child">
         {/* <ExampleNodes /> */}
         {props.children}
       </ul>
@@ -104,57 +104,57 @@ export const ScriptElt = () => (
 
 const ExampleNodes = () => {
   return (
-    <ul id='1000' class='child'>
-      <li class='dir' id='1001'>
+    <ul id="1000" class="child">
+      <li class="dir" id="1001">
         Item 1
-        <ul class='child'>
-          <li class='file' id='1002'>
+        <ul class="child">
+          <li class="file" id="1002">
             Item 1.1
-            <ul class='child file'></ul>
+            <ul class="child file"></ul>
           </li>
-          <li class='func' id='1003'>
+          <li class="func" id="1003">
             Item 1.1.1
-            <ul class='child'></ul>
+            <ul class="child"></ul>
           </li>
-          <li class='func' id='1004'>
+          <li class="func" id="1004">
             Item 1.1.2
-            <ul class='child'></ul>
+            <ul class="child"></ul>
           </li>
-          <li class='func' id='1005'>
+          <li class="func" id="1005">
             Item 1.1.3
-            <ul class='child'></ul>
+            <ul class="child"></ul>
           </li>
         </ul>
-        <li class='dir' id='1006'>
+        <li class="dir" id="1006">
           Item 2.1
-          <ul class='child'></ul>
-          <li class='dir' id='1007'>
+          <ul class="child"></ul>
+          <li class="dir" id="1007">
             Item 2.3
-            <ul class='child'></ul>
+            <ul class="child"></ul>
           </li>
-          <li class='dir' id='1008'>
+          <li class="dir" id="1008">
             Item 2.4
-            <ul class='child'></ul>
+            <ul class="child"></ul>
           </li>
           {/* {props.children} */}
         </li>
       </li>
-      <div id='newest'></div>
+      <div id="newest"></div>
     </ul>
   );
 };
 const AddNewNode = () => {
   return (
     <form
-      hx-post='/example/htmx/add'
-      hx-target='#added'
-      hx-swap='outerHTML'
-      _='on htmx:afterRequest reset() me'
+      hx-post="/example/htmx/add"
+      hx-target="#added"
+      hx-swap="outerHTML"
+      _="on htmx:afterRequest reset() me"
     >
-      <input name='title' type='text' />
+      <input name="title" type="text" />
       <button
-        class='text-white bg-blue-700 hover:bg-blue-800 rounded-lg px-5 py-2 text-center'
-        type='submit'
+        class="text-white bg-blue-700 hover:bg-blue-800 rounded-lg px-5 py-2 text-center"
+        type="submit"
       >
         Submit
       </button>
@@ -165,7 +165,7 @@ const AddNewNode = () => {
 // TODO: id/anyと、hx-targetが効いていない/domError
 export const DeleteButton = (id: any) => {
   return (
-    <button style='' hx-delete={`/example/htmx/:id`} hx-target={`#${id}`}>
+    <button style="" hx-delete={`/example/htmx/:id`} hx-target={`#${id}`}>
       DEL
     </button>
   );
@@ -173,10 +173,10 @@ export const DeleteButton = (id: any) => {
 
 export const ListItem = ({ id, title }: { id: string; title: string }) => {
   return (
-    <li class='dir' id={`${id}`}>
+    <li class="dir" id={`${id}`}>
       {title} / {id} / <DeleteButton id={`${id}`} />
-      <ul class='child'></ul>
-      <div id='added'></div>
+      <ul class="child"></ul>
+      <div id="added"></div>
     </li>
   );
 };

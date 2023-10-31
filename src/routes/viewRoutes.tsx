@@ -53,20 +53,37 @@ viewRoute
     );
   })
   .post(
+    "/inputtest",
+    zValidator(
+      "form",
+      z.object({
+        title: z.string().min(1),
+      })
+    ),
+    async (c) => {
+      console.log("c.req.parseBody()", await c.req.parseBody());
+      console.log("c.req.formData()", await c.req.formData());
+      return c.text("");
+    }
+  )
+  .post(
     "/input",
-    // zValidator(),
+    // zValidator(
+    //   "form",
+    //   z.object({
+    //     inputHtml: z.string().min(1),
+    //   })
+    // ),
     async (c) => {
       // const { username } = c.req.valid("param");
       // const { input } = c.req.valid("json");
       const username = "user";
-      console.log("c.req.parseBody()", await c.req.parseBody());
-      console.log("c.req.formData()", await c.req.formData());
 
       const input = await c.req.parseBody();
       const inputHtml = input["inputHtml"];
+      console.log("inputHtml: ", inputHtml);
 
       if (typeof inputHtml === "string") {
-        console.log("inputHtml: ", inputHtml);
         _TODOS[username].push(inputHtml);
       } else {
         console.error("inputHtml is not a string:", inputHtml);

@@ -6,6 +6,7 @@ import { Hono } from "hono";
 
 import viewRoute from "./routes/viewRoutes";
 import { _TODOS } from "./commons/_TODO";
+import aboutRoutes from "./routes/aboutRoutes";
 
 const appOpenApi = new OpenAPIHono();
 appOpenApi.use("*", cors()).get("/.well-known/ai-plugin.json", (c) => {
@@ -72,5 +73,6 @@ appOpenApi.doc("/openapi.json", {
 const app = new Hono();
 app.route("/", appOpenApi);
 app.route("/view", viewRoute);
+app.route("/about", aboutRoutes);
 
 export default app;

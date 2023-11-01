@@ -32,77 +32,54 @@ viewRoute
                 <div>_TODOS is empty now</div>
               </div>
             ) : (
-              _TODOS.user.map((item, index) => (
-                <>
-                  {/* TODO: 降順 */}
-                  {/* <div class="container">
-                    <div>code</div> */}
-                  <Sortable>
-                    <SaveItem>
-                      <Render item={item} index={index} />
-                    </SaveItem>
-                  </Sortable>
-                  {/* </div> */}
+              <>
+                <Sortable>
                   <div class="new-item"></div>
-                </>
-              ))
+                  {_TODOS.user
+                    .slice()
+                    .reverse()
+                    .map((item, index) => (
+                      <SaveItem>
+                        <Render item={item} index={index} />
+                      </SaveItem>
+                    ))}
+                </Sortable>
+              </>
             )}
           </div>
         </body>
       </html>
     );
   })
-  .post(
-    "/inputtest",
-    zValidator(
-      "form",
-      z.object({
-        title: z.string().min(1),
-      })
-    ),
-    async (c) => {
-      console.log("c.req.parseBody()", await c.req.parseBody());
-      console.log("c.req.formData()", await c.req.formData());
-      return c.text("");
+  .post("/input", async (c) => {
+    // const { username } = c.req.valid("param");
+    // const { input } = c.req.valid("json");
+    const username = "user";
+
+    const input = await c.req.parseBody();
+    const inputHtml = input["inputHtml"];
+    console.log("inputHtml: ", inputHtml);
+
+    if (typeof inputHtml === "string") {
+      _TODOS[username].push(inputHtml);
+      console.log("_TODOS.user ", _TODOS[username]);
+    } else {
+      console.error("inputHtml is not a string:", inputHtml);
     }
-  )
-  .post(
-    "/input",
-    // zValidator(
-    //   "form",
-    //   z.object({
-    //     inputHtml: z.string().min(1),
-    //   })
-    // ),
-    async (c) => {
-      // const { username } = c.req.valid("param");
-      // const { input } = c.req.valid("json");
-      const username = "user";
 
-      const input = await c.req.parseBody();
-      const inputHtml = input["inputHtml"];
-      console.log("inputHtml: ", inputHtml);
+    const item = _TODOS[username][_TODOS[username].length - 1];
+    const index = "newest";
 
-      if (typeof inputHtml === "string") {
-        _TODOS[username].push(inputHtml);
-      } else {
-        console.error("inputHtml is not a string:", inputHtml);
-      }
-
-      const item = _TODOS[username][_TODOS[username].length - 1];
-      const index = "newest";
-
-      return c.html(
-        <>
-          <SaveItem>
-            <Sortable>
-              <Render item={item} index={index} />
-            </Sortable>
-          </SaveItem>
+    return c.html(
+      <>
+        <Sortable>
           <div class="new-item"></div>
-        </>
-      );
-    }
-  );
+          <SaveItem>
+            <Render item={item} index={index} />
+          </SaveItem>
+        </Sortable>
+      </>
+    );
+  });
 
 export default viewRoute;

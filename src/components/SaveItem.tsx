@@ -10,9 +10,8 @@ export const SaveItem = (props) => {
     <>
       <form
         hx-post={`${props.route}/input`}
-        hx-target=".render"
-        hx-swap="none"
-        hx-on:submit={html` console.log() `}
+        hx-target=".new-item"
+        hx-swap="outerHTML"
       >
         <button type="submit">submit</button>
         {props.children}

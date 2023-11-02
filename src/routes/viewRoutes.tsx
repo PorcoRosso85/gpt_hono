@@ -68,7 +68,7 @@ viewRoute
       <>
         <Sortable>
           <div class="new-item"></div>
-          <SaveItem>
+          <SaveItem route={route}>
             <Render item={item} index={index} />
           </SaveItem>
         </Sortable>

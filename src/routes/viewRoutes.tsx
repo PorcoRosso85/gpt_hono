@@ -1,54 +1,48 @@
 import { Hono } from "hono";
-import { z } from "zod";
-import { zValidator } from "@hono/zod-validator";
 import { _TODOS } from "../commons/_TODO";
 import { Render } from "../components/Render";
 import { Sortable } from "../components/Sortable";
 import { SaveItem } from "../components/SaveItem";
+import Meta from "../components/Meta";
+
+const route = "/view";
 
 const viewRoute = new Hono();
 viewRoute
+  .use("*", async (c, next) => {
+    c.setRenderer((children) => {
+      console.log("view: ", _TODOS);
+      return c.html(
+        <Meta>
+          <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+          <div>{children}</div>
+        </Meta>
+      );
+    });
+    await next();
+  })
   .get("/", (c) => {
-    console.log("view: ", _TODOS);
-    // const object = {
-    //   user: ["<h1>hello</h1>", "<h1>hello</h1>"],
-    // };
-    // return c.html(<>{_TODOS}</>);
-    const style = `
-      .container { display: grid; grid-template-columns: 10% 90%; } 
-    `;
-
-    return c.html(
-      <html>
-        <head>
-          <style>{style}</style>
-          <script src="https://unpkg.com/htmx.org@1.9.6"></script>
-        </head>
-        <body>
-          <div>
-            {!_TODOS.user || _TODOS.user.length === 0 ? (
-              <div class="container">
-                <div>code</div>
-                <div>_TODOS is empty now</div>
-              </div>
-            ) : (
-              <>
-                <Sortable>
-                  <div class="new-item"></div>
-                  {_TODOS.user
-                    .slice()
-                    .reverse()
-                    .map((item, index) => (
-                      <SaveItem>
-                        <Render item={item} index={index} />
-                      </SaveItem>
-                    ))}
-                </Sortable>
-              </>
-            )}
+    return c.render(
+      <>
+        {!_TODOS.user || _TODOS.user.length === 0 ? (
+          <div class="container">
+            {/* <div>code</div> */}
+            <div>_TODOS is empty now</div>
           </div>
-        </body>
-      </html>
+        ) : (
+          <Sortable>
+            <div class="new-item"></div>
+            {_TODOS.user
+              .slice()
+              .reverse()
+              .map((item, index) => (
+                <SaveItem route={route}>
+                  <Render item={item} index={index} />
+                </SaveItem>
+              ))}
+          </Sortable>
+        )}
+      </>
     );
   })
   .post("/input", async (c) => {

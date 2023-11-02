@@ -1,8 +1,9 @@
 export const Render = ({ item, index }) => {
   return (
     <div
-      id="render"
+      class="render"
       key={index}
+      id={index}
       dangerouslySetInnerHTML={{ __html: item }}
     ></div>
   );

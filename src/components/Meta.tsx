@@ -1,5 +1,7 @@
 const Meta = (props) => {
-  const style = ``;
+  const style = `
+      // .container { display: grid; grid-template-columns: 10% 90%; } 
+  `;
   return (
     <html>
       <head>

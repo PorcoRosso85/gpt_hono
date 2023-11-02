@@ -1,4 +1,4 @@
-export const Sortable = (props: any) => {
+export const Sortable = (props) => {
   const style = `
   * {
   font-family: Consolas, 'Courier New', monospace;
@@ -67,21 +67,17 @@ ul, ol {
   return (
     <>
       <style>{style}</style>
-      <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-      {/* <AddNewNode /> */}
-      <ul class="child">
-        {/* <ExampleNodes /> */}
-        {props.children}
-      </ul>
+      <ul class="child">{props.children}</ul>
       <ScriptElt />
     </>
   );
 };
 
 export const ScriptElt = () => (
-  <script
-    dangerouslySetInnerHTML={{
-      __html: `
+  <>
+    <script
+      dangerouslySetInnerHTML={{
+        __html: `
       var nestedSortables = document.querySelectorAll(".child");
       for (var i = 0; i < nestedSortables.length; i++) {
         new Sortable(nestedSortables[i], {
@@ -98,51 +94,11 @@ export const ScriptElt = () => (
         });
       }
     `,
-    }}
-  ></script>
+      }}
+    ></script>
+  </>
 );
 
-const ExampleNodes = () => {
-  return (
-    <ul id="1000" class="child">
-      <li class="dir" id="1001">
-        Item 1
-        <ul class="child">
-          <li class="file" id="1002">
-            Item 1.1
-            <ul class="child file"></ul>
-          </li>
-          <li class="func" id="1003">
-            Item 1.1.1
-            <ul class="child"></ul>
-          </li>
-          <li class="func" id="1004">
-            Item 1.1.2
-            <ul class="child"></ul>
-          </li>
-          <li class="func" id="1005">
-            Item 1.1.3
-            <ul class="child"></ul>
-          </li>
-        </ul>
-        <li class="dir" id="1006">
-          Item 2.1
-          <ul class="child"></ul>
-          <li class="dir" id="1007">
-            Item 2.3
-            <ul class="child"></ul>
-          </li>
-          <li class="dir" id="1008">
-            Item 2.4
-            <ul class="child"></ul>
-          </li>
-          {/* {props.children} */}
-        </li>
-      </li>
-      <div id="newest"></div>
-    </ul>
-  );
-};
 const AddNewNode = () => {
   return (
     <form
@@ -162,7 +118,6 @@ const AddNewNode = () => {
   );
 };
 
-// TODO: id/anyと、hx-targetが効いていない/domError
 export const DeleteButton = (id: any) => {
   return (
     <button style="" hx-delete={`/example/htmx/:id`} hx-target={`#${id}`}>

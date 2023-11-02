@@ -1,9 +1,9 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { cors } from "hono/cors";
-import { aiPluginJson } from "../ai-plugin";
+import { aiPluginJson } from "../../../../src/ai-plugin";
 import { z, createRoute } from "@hono/zod-openapi";
 
-import { _TODOS } from "../commons/_TODO";
+import { _TODOS } from "../../../../src/components/_TODO";
 
 const UsernameParamsSchema = z.object({
   username: z.string().openapi({

@@ -1,12 +1,12 @@
 import { Hono } from "hono";
 
-import appOpenApi from "./routes/openAPIRoutes";
-import viewRoute from "./routes/viewRoutes";
-import aboutRoutes from "./routes/aboutRoutes";
+import appOpenApi from "../packages/openapi-route/src/routes/openAPIRoutes";
+import renderRoute from "../packages/render-route/src/routes/renderRoutes";
+import aboutRoutes from "../packages/about-route/src/routes/aboutRoutes";
 
 const app = new Hono();
 app.route("/", appOpenApi);
-app.route("/view", viewRoute);
+app.route("/render", renderRoute);
 app.route("/about", aboutRoutes);
 
 export default app;

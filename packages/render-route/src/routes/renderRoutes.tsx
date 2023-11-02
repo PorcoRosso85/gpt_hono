@@ -1,14 +1,14 @@
 import { Hono } from "hono";
-import { _TODOS } from "../commons/_TODO";
+import { _TODOS } from "../../../../src/components/_TODO";
 import { Render } from "../components/Render";
 import { Sortable } from "../components/Sortable";
 import { SaveItem } from "../components/SaveItem";
-import Meta from "../components/Meta";
+import Meta from "../../../../src/components/Meta";
 
-const route = "/view";
+const route = "/render";
 
-const viewRoute = new Hono();
-viewRoute
+const renderRoute = new Hono();
+renderRoute
   .use("*", async (c, next) => {
     c.setRenderer((children) => {
       console.log("view: ", _TODOS);
@@ -76,4 +76,4 @@ viewRoute
     );
   });
 
-export default viewRoute;
+export default renderRoute;
